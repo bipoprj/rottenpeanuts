@@ -7,6 +7,19 @@ http://api.rottentomatoes.com/api/public/v1.0/lists/movies/box_office.json?apike
 
 #fix code signing issue
 https://github.com/CocoaPods/CocoaPods/issues/3156
+adding into Podfile
+post_install do |installer_representation|
+    installer_representation.project.targets.each do |target|
+        if target.to_s.include? 'Pods'
+            target.build_configurations.each do |config|
+                if !config.to_s.include? 'Debug'
+                    config.build_settings['CODE_SIGN_IDENTITY[sdk=iphoneos*]'] = 'iPhone Distribution'
+                end
+            end
+        end
+    end
+end
+
 
 #pod install
 #.....
